@@ -292,3 +292,7 @@ div.accountInfo
     text-align: right;
     padding-right: 10px;
 }
+
+.small { font-size: x-small; }
+.red  { color: red !important; }
+.undecorated { text-decoration: none; }
