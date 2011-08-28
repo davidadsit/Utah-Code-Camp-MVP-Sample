@@ -20,6 +20,7 @@ namespace WebSite.MyLists
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			UserNameLabel.Text = User.Identity.Name;
 			DisplayLists();
 		}
 
