@@ -18,13 +18,12 @@
 			</ul>
 		</FooterTemplate>
 		<ItemTemplate>
-			<li><a href='ItemDetails.aspx?ItemId=<%# Eval("ItemId") %>'>
-				<%# Eval("Title") %></a>
+			<li><%# Eval("Title") %>
 				<asp:LinkButton runat="server" ID="DeleteList" ToolTip="Delete List" CssClass="small red undecorated"
 					CommandName="Delete" CommandArgument='<%# Eval("ItemId") %>'>X</asp:LinkButton></li>
 		</ItemTemplate>
 	</asp:Repeater>
 	Add a new item:
-	<asp:TextBox runat="server" ID="NewItemTitleTextBox">New List</asp:TextBox>
+	<asp:TextBox runat="server" ID="NewItemTitleTextBox">New Item</asp:TextBox>
 	<asp:LinkButton runat="server" ID="AddNewItemButton" OnClick="AddNewItemButton_Click">Add</asp:LinkButton>
 </asp:Content>
