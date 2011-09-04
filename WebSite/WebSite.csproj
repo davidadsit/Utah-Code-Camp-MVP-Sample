@@ -55,10 +55,6 @@
     <Content Include="Account\ChangePasswordSuccess.aspx" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Register.aspx" />
-    <Content Include="App_Data\Shopping.mdf" />
-    <Content Include="App_Data\Shopping_log.ldf">
-      <DependentUpon>Shopping.mdf</DependentUpon>
-    </Content>
     <Content Include="MyLists\AllLists.aspx" />
     <Content Include="MyLists\SingleList.aspx" />
     <Content Include="Styles\Site.css" />
