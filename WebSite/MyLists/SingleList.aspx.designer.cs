@@ -10,7 +10,7 @@
 namespace WebSite.MyLists {
     
     
-    public partial class Personal {
+    public partial class SingleList {
         
         /// <summary>
         /// ListTitleTextbox control.

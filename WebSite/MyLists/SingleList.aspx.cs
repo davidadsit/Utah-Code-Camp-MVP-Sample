@@ -7,7 +7,7 @@ using Common;
 
 namespace WebSite.MyLists
 {
-	public partial class Personal : Page
+	public partial class SingleList : Page
 	{
 		protected void AddNewItemButton_Click(object sender, EventArgs e)
 		{
