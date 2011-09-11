@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Common;
+using WebSite.Logic.Presenters;
+using WebSite.Logic.ViewModels;
 
 namespace WebSite.Logic.Views
 {
@@ -9,6 +11,6 @@ namespace WebSite.Logic.Views
 		string ListTitle { get; }
 		string ListDescription { get; }
 		string NewItemTitle { get; }
-		void DisplayListItems(IEnumerable<Item> listItems);
+		void DisplayListItems(IEnumerable<ListItemViewModel> listItems);
 	}
 }

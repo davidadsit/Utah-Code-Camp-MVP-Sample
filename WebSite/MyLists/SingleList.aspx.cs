@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using Business;
 using Common;
 using WebSite.Logic.Presenters;
+using WebSite.Logic.ViewModels;
 using WebSite.Logic.Views;
 
 namespace WebSite.MyLists
@@ -33,7 +34,7 @@ namespace WebSite.MyLists
 			get { return NewItemTitleTextBox.Text; }
 		}
 
-		public void DisplayListItems(IEnumerable<Item> listItems)
+		public void DisplayListItems(IEnumerable<ListItemViewModel> listItems)
 		{
 			ListItemsRepeater.DataSource = listItems;
 			ListItemsRepeater.DataBind();

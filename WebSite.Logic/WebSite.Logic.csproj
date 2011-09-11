@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Presenters\SingleListPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ListItemViewModel.cs" />
     <Compile Include="Views\ISingleListView.cs" />
   </ItemGroup>
   <ItemGroup>
