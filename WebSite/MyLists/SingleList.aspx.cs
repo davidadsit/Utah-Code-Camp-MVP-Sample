@@ -13,6 +13,21 @@ namespace WebSite.MyLists
 	{
 		private SingleListPresenter presenter;
 
+		public int UserListId
+		{
+			get { return int.Parse(Request.QueryString["UserListId"]); }
+		}
+
+		public string ListTitle
+		{
+			get { return ListTitleTextbox.Text; }
+		}
+
+		public string ListDescription
+		{
+			get { return ListDescriptionTextbox.Text; }
+		}
+
 		protected void AddNewItemButton_Click(object sender, EventArgs e)
 		{
 			ListManager listManager = new ListManager();
@@ -61,9 +76,7 @@ namespace WebSite.MyLists
 
 		protected void SaveChangesLinkButton_Click(object sender, EventArgs e)
 		{
-			ListManager listManager = new ListManager();
-			string listId = Request.QueryString["UserListId"];
-			listManager.SaveChanges(int.Parse(listId), ListTitleTextbox.Text, ListDescriptionTextbox.Text);
+			presenter.HandleSaveChanges();
 		}
 	}
 }
