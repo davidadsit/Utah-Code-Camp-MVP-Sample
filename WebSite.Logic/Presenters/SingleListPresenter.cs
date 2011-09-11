@@ -6,15 +6,16 @@ namespace WebSite.Logic.Presenters
 	public class SingleListPresenter
 	{
 		private readonly ISingleListView view;
+		private readonly IListManager listManager;
 
-		public SingleListPresenter(ISingleListView view)
+		public SingleListPresenter(ISingleListView view, IListManager listManager)
 		{
 			this.view = view;
+			this.listManager = listManager;
 		}
 
 		public void HandleSaveChanges()
 		{
-			ListManager listManager = new ListManager();
 			listManager.SaveChanges(view.UserListId, view.ListTitle, view.ListDescription);
 		}
 	}

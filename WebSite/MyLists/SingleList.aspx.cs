@@ -54,7 +54,7 @@ namespace WebSite.MyLists
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			presenter = new SingleListPresenter(this);
+			presenter = new SingleListPresenter(this, new ListManager());
 			string listId = Request.QueryString["UserListId"];
 			if (string.IsNullOrEmpty(listId))
 			{

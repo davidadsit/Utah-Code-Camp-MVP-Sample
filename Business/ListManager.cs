@@ -4,7 +4,19 @@ using Data;
 
 namespace Business
 {
-	public class ListManager
+	public interface IListManager
+	{
+		IEnumerable<Item> GetListItems(int listId);
+		IEnumerable<UserList> GetUserLists(string userName);
+		void AddNewList(string userName, string newListName);
+		void DeleteList(int userListId);
+		void AddItemToList(int userListId, string listItem);
+		void DeleteItem(int itemId);
+		UserList GetList(int userListId);
+		void SaveChanges(int userListId, string newTitle, string newDescription);
+	}
+
+	public class ListManager : IListManager
 	{
 		public IEnumerable<Item> GetListItems(int listId)
 		{
