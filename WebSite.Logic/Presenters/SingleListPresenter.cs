@@ -16,7 +16,6 @@ namespace WebSite.Logic.Presenters
 		{
 			ListManager listManager = new ListManager();
 			listManager.SaveChanges(view.UserListId, view.ListTitle, view.ListDescription);
-
 		}
 	}
 }
