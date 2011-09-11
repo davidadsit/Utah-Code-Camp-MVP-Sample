@@ -4,11 +4,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
 using Common;
+using WebSite.Logic.Presenters;
+using WebSite.Logic.Views;
 
 namespace WebSite.MyLists
 {
-	public partial class SingleList : Page
+	public partial class SingleList : Page, ISingleListView
 	{
+		private SingleListPresenter presenter;
+
 		protected void AddNewItemButton_Click(object sender, EventArgs e)
 		{
 			ListManager listManager = new ListManager();
@@ -35,6 +39,7 @@ namespace WebSite.MyLists
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			presenter = new SingleListPresenter(this);
 			string listId = Request.QueryString["UserListId"];
 			if (string.IsNullOrEmpty(listId))
 			{
