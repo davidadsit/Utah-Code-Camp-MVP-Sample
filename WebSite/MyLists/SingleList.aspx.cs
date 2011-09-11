@@ -28,14 +28,20 @@ namespace WebSite.MyLists
 			get { return ListDescriptionTextbox.Text; }
 		}
 
-		protected void AddNewItemButton_Click(object sender, EventArgs e)
+		public string NewItemTitle
 		{
-			ListManager listManager = new ListManager();
-			string listId = Request.QueryString["UserListId"];
-			listManager.AddItemToList(int.Parse(listId), NewItemTitleTextBox.Text);
-			IEnumerable<Item> listItems = listManager.GetListItems(int.Parse(listId));
+			get { return NewItemTitleTextBox.Text; }
+		}
+
+		public void DisplayListItems(IEnumerable<Item> listItems)
+		{
 			ListItemsRepeater.DataSource = listItems;
 			ListItemsRepeater.DataBind();
+		}
+
+		protected void AddNewItemButton_Click(object sender, EventArgs e)
+		{
+			presenter.HandleAddNewItem();
 		}
 
 		protected void ListItemsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
