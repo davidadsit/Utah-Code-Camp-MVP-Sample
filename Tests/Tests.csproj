@@ -50,6 +50,16 @@
     <Compile Include="PresenterTests\SingleListPresenterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{A96B98CB-78FE-4EB4-89FB-FFA0F2839E28}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSite.Logic\WebSite.Logic.csproj">
+      <Project>{68615AC3-9FFE-4E10-96A3-EAB97666D228}</Project>
+      <Name>WebSite.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
