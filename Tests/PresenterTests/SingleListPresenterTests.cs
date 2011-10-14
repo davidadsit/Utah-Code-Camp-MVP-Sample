@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using Business;
 using Common;
@@ -13,24 +13,44 @@ namespace Tests.PresenterTests
 	[TestFixture]
 	public class SingleListPresenterTests
 	{
+		private const string NEW_TITLE = "new title";
+		private const string NEW_DESCRIPTION = "description";
+		private const int USER_LIST_ID = 1;
+		private const string NEW_LIST_ITEM = "new list item";
+
+		private Mock<IListManager> listManagerMock;
+		private SingleListPresenter presenter;
+		private Mock<ISingleListView> viewMock;
+
+		[SetUp]
+		public void SetUp()
+		{
+			viewMock = new Mock<ISingleListView>();
+			listManagerMock = new Mock<IListManager>();
+			presenter = new SingleListPresenter(viewMock.Object, listManagerMock.Object);
+		}
+
+		[Test]
+		public void HandleAddNewItem_delegates_adding_to_the_ListManager()
+		{
+			viewMock.Setup(x => x.UserListId).Returns(USER_LIST_ID);
+			viewMock.Setup(x => x.NewItemTitle).Returns(NEW_LIST_ITEM);
+
+			presenter.HandleAddNewItem();
+
+			listManagerMock.Verify(x => x.AddItemToList(USER_LIST_ID, NEW_LIST_ITEM));
+		}
+
 		[Test]
 		public void HandleSaveChanges_delegate_saving_to_the_ListManager()
 		{
-			const int userListId = 1;
-			const string newTitle = "new title";
-			const string newDescription = "description";
-
-			Mock<ISingleListView> viewMock = new Mock<ISingleListView>();
-			Mock<IListManager> listManagerMock = new Mock<IListManager>();
-			SingleListPresenter presenter = new SingleListPresenter(viewMock.Object, listManagerMock.Object);
-
-			viewMock.Setup(x => x.UserListId).Returns(userListId);
-			viewMock.Setup(x => x.ListTitle).Returns(newTitle);
-			viewMock.Setup(x => x.ListDescription).Returns(newDescription);
+			viewMock.Setup(x => x.UserListId).Returns(USER_LIST_ID);
+			viewMock.Setup(x => x.ListTitle).Returns(NEW_TITLE);
+			viewMock.Setup(x => x.ListDescription).Returns(NEW_DESCRIPTION);
 
 			presenter.HandleSaveChanges();
 
-			listManagerMock.Verify(x => x.SaveChanges(userListId, newTitle, newDescription));
+			listManagerMock.Verify(x => x.SaveChanges(USER_LIST_ID, NEW_TITLE, NEW_DESCRIPTION));
 		}
 
 		[Test]
@@ -56,23 +76,24 @@ namespace Tests.PresenterTests
 		}
 	}
 
-	class ViewStub : ISingleListView
+	internal class ViewStub : ISingleListView
 	{
 		public int UserListId { get; set; }
 		public string ListTitle { get; set; }
 		public string ListDescription { get; set; }
 		public string NewItemTitle { get; set; }
+
 		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 	}
 
-	class ListManagerMock : IListManager
+	internal class ListManagerMock : IListManager
 	{
-		private int userListId;
-		private string newTitle;
 		private string newDescription;
+		private string newTitle;
+		private int userListId;
 
 		public string NewDescription
 		{
@@ -89,39 +110,39 @@ namespace Tests.PresenterTests
 			get { return userListId; }
 		}
 
-		public IEnumerable<Item> GetListItems(int listId)
+		public void AddItemToList(int userListId, string listItem)
 		{
-			throw new System.NotImplementedException();
-		}
-
-		public IEnumerable<UserList> GetUserLists(string userName)
-		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public void AddNewList(string userName, string newListName)
 		{
-			throw new System.NotImplementedException();
-		}
-
-		public void DeleteList(int userListId)
-		{
-			throw new System.NotImplementedException();
-		}
-
-		public void AddItemToList(int userListId, string listItem)
-		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public void DeleteItem(int itemId)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
+		}
+
+		public void DeleteList(int userListId)
+		{
+			throw new NotImplementedException();
 		}
 
 		public UserList GetList(int userListId)
 		{
-			throw new System.NotImplementedException();
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<Item> GetListItems(int listId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<UserList> GetUserLists(string userName)
+		{
+			throw new NotImplementedException();
 		}
 
 		public void SaveChanges(int userListId, string newTitle, string newDescription)
