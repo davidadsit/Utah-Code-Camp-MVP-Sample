@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Business;
 using Common;
 using Moq;
@@ -39,6 +40,20 @@ namespace Tests.PresenterTests
 			presenter.HandleAddNewItem();
 
 			listManagerMock.Verify(x => x.AddItemToList(USER_LIST_ID, NEW_LIST_ITEM));
+		}
+
+		[Test]
+		public void HandleAddNewItem_diplays_the_list_of_itemviewmodels_including_the_new_item()
+		{
+			ViewStub viewMock = new ViewStub();
+			ListManagerMock listManagerMock = new ListManagerMock();
+			SingleListPresenter presenter = new SingleListPresenter(viewMock, listManagerMock);
+			viewMock.UserListId = USER_LIST_ID;
+			viewMock.NewItemTitle = NEW_LIST_ITEM;
+
+			presenter.HandleAddNewItem();
+
+			viewMock.DisplayedListItems.Single(x => x.Title == NEW_LIST_ITEM);
 		}
 
 		[Test]
@@ -85,8 +100,10 @@ namespace Tests.PresenterTests
 
 		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
 		{
-			throw new NotImplementedException();
+			DisplayedListItems = listItems;
 		}
+
+		public IEnumerable<ItemViewModel> DisplayedListItems { get; set; }
 	}
 
 	internal class ListManagerMock : IListManager
@@ -94,6 +111,7 @@ namespace Tests.PresenterTests
 		private string newDescription;
 		private string newTitle;
 		private int userListId;
+		private List<Item> listItems = new List<Item>();
 
 		public string NewDescription
 		{
@@ -112,7 +130,7 @@ namespace Tests.PresenterTests
 
 		public void AddItemToList(int userListId, string listItem)
 		{
-			throw new NotImplementedException();
+			listItems.Add(new Item(){Title = listItem});
 		}
 
 		public void AddNewList(string userName, string newListName)
@@ -137,7 +155,7 @@ namespace Tests.PresenterTests
 
 		public IEnumerable<Item> GetListItems(int listId)
 		{
-			throw new NotImplementedException();
+			return listItems;
 		}
 
 		public IEnumerable<UserList> GetUserLists(string userName)
