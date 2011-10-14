@@ -1,12 +1,16 @@
-﻿using Business;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Business;
+using Common;
+using WebSiteLogic.ViewModel;
 using WebSiteLogic.Views;
 
 namespace WebSiteLogic.Presenters
 {
 	public class SingleListPresenter
 	{
-		private readonly ISingleListView view;
 		private readonly IListManager listManager;
+		private readonly ISingleListView view;
 
 		public SingleListPresenter(ISingleListView view, IListManager listManager)
 		{
@@ -14,9 +18,29 @@ namespace WebSiteLogic.Presenters
 			this.listManager = listManager;
 		}
 
+		public void HandleAddNewItem()
+		{
+			int userListId = view.UserListId;
+			listManager.AddItemToList(userListId, view.NewItemTitle);
+			IEnumerable<Item> listItems = listManager.GetListItems(userListId);
+			IEnumerable<ItemViewModel> itemViewModels = listItems.Select(ProjectItemToViewModel);
+			view.DisplayItems(itemViewModels);
+		}
+
 		public void HandleSaveChanges()
 		{
 			listManager.SaveChanges(view.UserListId, view.ListTitle, view.ListDescription);
+		}
+
+		private static ItemViewModel ProjectItemToViewModel(Item x)
+		{
+			ItemViewModel projectItemToViewModel =
+				new ItemViewModel
+					{
+						Title = x.Title,
+						ItemId = x.ItemId.ToString(),
+					};
+			return projectItemToViewModel;
 		}
 	}
 }

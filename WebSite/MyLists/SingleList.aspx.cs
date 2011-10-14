@@ -5,6 +5,7 @@ using System.Web.UI.WebControls;
 using Business;
 using Common;
 using WebSiteLogic.Presenters;
+using WebSiteLogic.ViewModel;
 using WebSiteLogic.Views;
 
 namespace WebSite.MyLists
@@ -13,14 +14,35 @@ namespace WebSite.MyLists
 	{
 		private SingleListPresenter presenter;
 
-		protected void AddNewItemButton_Click(object sender, EventArgs e)
+		public int UserListId
 		{
-			ListManager listManager = new ListManager();
-			string listId = Request.QueryString["UserListId"];
-			listManager.AddItemToList(int.Parse(listId), NewItemTitleTextBox.Text);
-			IEnumerable<Item> listItems = listManager.GetListItems(int.Parse(listId));
+			get { return int.Parse(Request.QueryString["UserListId"]); }
+		}
+
+		public string ListTitle
+		{
+			get { return ListTitleTextbox.Text; }
+		}
+
+		public string ListDescription
+		{
+			get { return ListDescriptionTextbox.Text; }
+		}
+
+		public string NewItemTitle
+		{
+			get { return NewItemTitleTextBox.Text; }
+		}
+
+		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
+		{
 			ListItemsRepeater.DataSource = listItems;
 			ListItemsRepeater.DataBind();
+		}
+
+		protected void AddNewItemButton_Click(object sender, EventArgs e)
+		{
+			presenter.HandleAddNewItem();
 		}
 
 		protected void ListItemsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -62,21 +84,6 @@ namespace WebSite.MyLists
 		protected void SaveChangesLinkButton_Click(object sender, EventArgs e)
 		{
 			presenter.HandleSaveChanges();
-		}
-
-		public int UserListId
-		{
-			get { return int.Parse(Request.QueryString["UserListId"]); }
-		}
-
-		public string ListTitle
-		{
-			get { return ListTitleTextbox.Text; }
-		}
-
-		public string ListDescription
-		{
-			get { return ListDescriptionTextbox.Text; }
 		}
 	}
 }

@@ -5,6 +5,7 @@ using Common;
 using Moq;
 using NUnit.Framework;
 using WebSiteLogic.Presenters;
+using WebSiteLogic.ViewModel;
 using WebSiteLogic.Views;
 
 namespace Tests.PresenterTests
@@ -60,6 +61,11 @@ namespace Tests.PresenterTests
 		public int UserListId { get; set; }
 		public string ListTitle { get; set; }
 		public string ListDescription { get; set; }
+		public string NewItemTitle { get; set; }
+		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
+		{
+			throw new System.NotImplementedException();
+		}
 	}
 
 	class ListManagerMock : IListManager
