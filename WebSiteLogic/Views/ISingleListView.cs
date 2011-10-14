@@ -11,6 +11,7 @@ namespace WebSiteLogic.Views
 		string ListTitle { get; }
 		string ListDescription { get; }
 		string NewItemTitle { get; }
+		int ItemIdToDelete { get; }
 		void DisplayItems(IEnumerable<ItemViewModel> listItems);
 	}
 }

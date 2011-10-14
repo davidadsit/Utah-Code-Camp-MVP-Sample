@@ -17,6 +17,7 @@ namespace Tests.PresenterTests
 		private const string NEW_TITLE = "new title";
 		private const string NEW_DESCRIPTION = "description";
 		private const int USER_LIST_ID = 1;
+		private const int ITEM_ID_TO_DELETE = 2;
 		private const string NEW_LIST_ITEM = "new list item";
 
 		private Mock<IListManager> listManagerMock;
@@ -40,6 +41,30 @@ namespace Tests.PresenterTests
 			presenter.HandleAddNewItem();
 
 			listManagerMock.Verify(x => x.AddItemToList(USER_LIST_ID, NEW_LIST_ITEM));
+		}
+
+		[Test]
+		public void HandleDeleteItem_delegates_deleting_to_the_ListManager()
+		{
+			viewMock.Setup(x => x.ItemIdToDelete).Returns(ITEM_ID_TO_DELETE);
+
+			presenter.HandleDeleteItem();
+
+			listManagerMock.Verify(x => x.DeleteItem(ITEM_ID_TO_DELETE));
+		}
+
+		[Test]
+		public void HandleDeleteItem_diplays_the_list_of_itemviewmodels_excluding_the_deleted_item()
+		{
+			ViewStub viewMock = new ViewStub();
+			ListManagerMock listManagerMock = new ListManagerMock();
+			SingleListPresenter presenter = new SingleListPresenter(viewMock, listManagerMock);
+			viewMock.UserListId = USER_LIST_ID;
+			viewMock.NewItemTitle = NEW_LIST_ITEM;
+
+			presenter.HandleDeleteItem();
+
+			Assert.IsNull(viewMock.DisplayedListItems.SingleOrDefault(x => x.Title == NEW_LIST_ITEM));
 		}
 
 		[Test]
@@ -97,6 +122,7 @@ namespace Tests.PresenterTests
 		public string ListTitle { get; set; }
 		public string ListDescription { get; set; }
 		public string NewItemTitle { get; set; }
+		public int ItemIdToDelete { get; set; }
 
 		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
 		{
@@ -140,7 +166,7 @@ namespace Tests.PresenterTests
 
 		public void DeleteItem(int itemId)
 		{
-			throw new NotImplementedException();
+			listItems.RemoveAll(x => x.ItemId == itemId);
 		}
 
 		public void DeleteList(int userListId)

@@ -22,9 +22,14 @@ namespace WebSiteLogic.Presenters
 		{
 			int userListId = view.UserListId;
 			listManager.AddItemToList(userListId, view.NewItemTitle);
-			IEnumerable<Item> listItems = listManager.GetListItems(userListId);
-			IEnumerable<ItemViewModel> itemViewModels = listItems.Select(ProjectItemToViewModel);
-			view.DisplayItems(itemViewModels);
+			DisplayListItems(userListId);
+		}
+
+		public void HandleDeleteItem()
+		{
+			int itemIdToDelete = view.ItemIdToDelete;
+			listManager.DeleteItem(itemIdToDelete);
+			DisplayListItems(view.UserListId);
 		}
 
 		public void HandleSaveChanges()
@@ -41,6 +46,13 @@ namespace WebSiteLogic.Presenters
 						ItemId = x.ItemId.ToString(),
 					};
 			return projectItemToViewModel;
+		}
+
+		private void DisplayListItems(int userListId)
+		{
+			IEnumerable<Item> listItems = listManager.GetListItems(userListId);
+			IEnumerable<ItemViewModel> itemViewModels = listItems.Select(ProjectItemToViewModel);
+			view.DisplayItems(itemViewModels);
 		}
 	}
 }

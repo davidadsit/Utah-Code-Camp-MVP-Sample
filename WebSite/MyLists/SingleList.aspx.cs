@@ -13,6 +13,7 @@ namespace WebSite.MyLists
 	public partial class SingleList : Page, ISingleListView
 	{
 		private SingleListPresenter presenter;
+		private string itemCommandId;
 
 		public int UserListId
 		{
@@ -34,6 +35,11 @@ namespace WebSite.MyLists
 			get { return NewItemTitleTextBox.Text; }
 		}
 
+		public int ItemIdToDelete
+		{
+			get { return int.Parse(itemCommandId); }
+		}
+
 		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
 		{
 			ListItemsRepeater.DataSource = listItems;
@@ -47,14 +53,11 @@ namespace WebSite.MyLists
 
 		protected void ListItemsRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
 		{
+			itemCommandId = e.CommandArgument.ToString();
 			switch (e.CommandName)
 			{
 				case "Delete":
-					ListManager listManager = new ListManager();
-					listManager.DeleteItem(int.Parse(e.CommandArgument.ToString()));
-					string listId = Request.QueryString["UserListId"];
-					ListItemsRepeater.DataSource = listManager.GetListItems(int.Parse(listId));
-					ListItemsRepeater.DataBind();
+					presenter.HandleDeleteItem();
 					break;
 			}
 		}
