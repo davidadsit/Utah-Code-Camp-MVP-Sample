@@ -4,11 +4,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
 using Common;
+using WebSiteLogic.Presenters;
+using WebSiteLogic.Views;
 
 namespace WebSite.MyLists
 {
-	public partial class SingleList : Page
+	public partial class SingleList : Page, ISingleListView
 	{
+		private SingleListPresenter presenter;
+
 		protected void AddNewItemButton_Click(object sender, EventArgs e)
 		{
 			ListManager listManager = new ListManager();
@@ -35,6 +39,7 @@ namespace WebSite.MyLists
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			presenter = new SingleListPresenter(this, new ListManager());
 			string listId = Request.QueryString["UserListId"];
 			if (string.IsNullOrEmpty(listId))
 			{
@@ -56,11 +61,22 @@ namespace WebSite.MyLists
 
 		protected void SaveChangesLinkButton_Click(object sender, EventArgs e)
 		{
-			ListManager listManager = new ListManager();
-			string listId = Request.QueryString["UserListId"];
-			listManager.SaveChanges(int.Parse(listId), ListTitleTextbox.Text, ListDescriptionTextbox.Text);
+			presenter.HandleSaveChanges();
 		}
 
-		// 3000 more lines
+		public int UserListId
+		{
+			get { return int.Parse(Request.QueryString["UserListId"]); }
+		}
+
+		public string ListTitle
+		{
+			get { return ListTitleTextbox.Text; }
+		}
+
+		public string ListDescription
+		{
+			get { return ListDescriptionTextbox.Text; }
+		}
 	}
 }

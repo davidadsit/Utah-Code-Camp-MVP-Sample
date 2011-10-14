@@ -60,6 +60,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{A96B98CB-78FE-4EB4-89FB-FFA0F2839E28}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebSiteLogic\WebSiteLogic.csproj">
+      <Project>{5F557CE3-2DC7-49A3-AA5B-44E9F4EC2A6C}</Project>
+      <Name>WebSiteLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

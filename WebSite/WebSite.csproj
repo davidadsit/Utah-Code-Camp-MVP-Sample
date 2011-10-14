@@ -142,6 +142,10 @@
       <Project>{CDA420D8-B41D-4517-BCF0-A4D12C0151D4}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WebSiteLogic\WebSiteLogic.csproj">
+      <Project>{5F557CE3-2DC7-49A3-AA5B-44E9F4EC2A6C}</Project>
+      <Name>WebSiteLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
