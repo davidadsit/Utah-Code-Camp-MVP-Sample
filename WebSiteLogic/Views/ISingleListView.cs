@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Common;
-using WebSiteLogic.Presenters;
 using WebSiteLogic.ViewModel;
 
 namespace WebSiteLogic.Views

@@ -32,6 +32,23 @@ namespace WebSiteLogic.Presenters
 			DisplayListItems(view.UserListId);
 		}
 
+		public void HandlePageLoad()
+		{
+			if (view.UserListId == 0)
+			{
+				view.SendUserToListsPage();
+				return;
+			}
+			DisplayListItems(view.UserListId);
+			if (view.IsPostBack)
+			{
+				return;
+			}
+			UserList userList = listManager.GetList(view.UserListId);
+			view.ListTitle = userList.Title;
+			view.ListDescription = userList.Description;
+		}
+
 		public void HandleSaveChanges()
 		{
 			listManager.SaveChanges(view.UserListId, view.ListTitle, view.ListDescription);
@@ -53,23 +70,6 @@ namespace WebSiteLogic.Presenters
 			IEnumerable<Item> listItems = listManager.GetListItems(userListId);
 			IEnumerable<ItemViewModel> itemViewModels = listItems.Select(ProjectItemToViewModel);
 			view.DisplayItems(itemViewModels);
-		}
-
-		public void HandlePageLoad()
-		{
-			if (view.UserListId == 0)
-			{
-				view.SendUserToListsPage();
-				return;
-			}
-			DisplayListItems(view.UserListId);			
-			if (view.IsPostBack)
-			{
-				return;
-			}
-			UserList userList = listManager.GetList(view.UserListId);
-			view.ListTitle = userList.Title;
-			view.ListDescription = userList.Description;
 		}
 	}
 }
