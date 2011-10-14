@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business;
-using Common;
 using WebSiteLogic.Presenters;
 using WebSiteLogic.ViewModel;
 using WebSiteLogic.Views;
@@ -12,22 +11,29 @@ namespace WebSite.MyLists
 {
 	public partial class SingleList : Page, ISingleListView
 	{
-		private SingleListPresenter presenter;
 		private string itemCommandId;
+		private SingleListPresenter presenter;
 
 		public int UserListId
 		{
-			get { return int.Parse(Request.QueryString["UserListId"]); }
+			get
+			{
+				int userListId;
+				int.TryParse(Request.QueryString["UserListId"], out userListId);
+				return userListId;
+			}
 		}
 
 		public string ListTitle
 		{
 			get { return ListTitleTextbox.Text; }
+			set { ListDescriptionTextbox.Text = value; }
 		}
 
 		public string ListDescription
 		{
 			get { return ListDescriptionTextbox.Text; }
+			set { ListDescriptionTextbox.Text = value; }
 		}
 
 		public string NewItemTitle
@@ -44,6 +50,11 @@ namespace WebSite.MyLists
 		{
 			ListItemsRepeater.DataSource = listItems;
 			ListItemsRepeater.DataBind();
+		}
+
+		public void SendUserToListsPage()
+		{
+			Response.Redirect("AllLists.aspx");
 		}
 
 		protected void AddNewItemButton_Click(object sender, EventArgs e)
@@ -65,23 +76,7 @@ namespace WebSite.MyLists
 		protected void Page_Load(object sender, EventArgs e)
 		{
 			presenter = new SingleListPresenter(this, new ListManager());
-			string listId = Request.QueryString["UserListId"];
-			if (string.IsNullOrEmpty(listId))
-			{
-				Response.Redirect("AllLists.aspx");
-				return;
-			}
-			ListManager listManager = new ListManager();
-			IEnumerable<Item> listItems = listManager.GetListItems(int.Parse(listId));
-			ListItemsRepeater.DataSource = listItems;
-			ListItemsRepeater.DataBind();
-			if (IsPostBack)
-			{
-				return;
-			}
-			UserList userList = listManager.GetList(int.Parse(listId));
-			ListTitleTextbox.Text = userList.Title;
-			ListDescriptionTextbox.Text = userList.Description;
+			presenter.HandlePageLoad();
 		}
 
 		protected void SaveChangesLinkButton_Click(object sender, EventArgs e)

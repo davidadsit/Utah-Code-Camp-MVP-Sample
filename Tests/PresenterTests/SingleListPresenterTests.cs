@@ -123,10 +123,16 @@ namespace Tests.PresenterTests
 		public string ListDescription { get; set; }
 		public string NewItemTitle { get; set; }
 		public int ItemIdToDelete { get; set; }
+		public bool IsPostBack { get; set; }
 
 		public void DisplayItems(IEnumerable<ItemViewModel> listItems)
 		{
 			DisplayedListItems = listItems;
+		}
+
+		public void SendUserToListsPage()
+		{
+			throw new NotImplementedException();
 		}
 
 		public IEnumerable<ItemViewModel> DisplayedListItems { get; set; }
